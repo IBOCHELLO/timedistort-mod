@@ -1,29 +1,32 @@
+name: Minecraft Modu Oluştur
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Depoyu çek
         uses: actions/checkout@v4
 
-      - name: Setup Java 17
+      - name: Java 17 kur
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
-      - name: Grant execute permission for gradlew
+      - name: Gradlew'ye çalıştırma izni ver
         run: chmod +x gradlew
 
-      - name: Build with Gradle
+      - name: Gradle ile derle
         run: ./gradlew build --no-daemon
 
-      - name: List build output folders
-        run: |
-          ls -l build/libs/
-          ls -l build/
-
-      - name: Upload artifact
+      - name: Artifact yükle
         uses: actions/upload-artifact@v4
         with:
           name: mod-jar
