@@ -1,37 +1,44 @@
-# Read about `build.yaml` at https://pub.dev/packages/build_config
-builders:
+name: Build Forge 1.20.1 Mod
 
-  copyBuilder:
-    import: "package:example/builder.dart"
-    builder_factories: ["copyBuilder"]
-    build_extensions: {".txt": [".txt.copy"]}
-    build_to: source
-    auto_apply: root_package
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
-  resolvingBuilder:
-    import: "package:example/builder.dart"
-    builder_factories: ["resolvingBuilder"]
-    build_extensions: {".dart": [".dart.info"]}
-    build_to: source
-    auto_apply: root_package
-    defaults:
-      generate_for:
-        # Only apply to .dart files in the web directory
-        include:
-        - web/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  cssBuilder:
-    import: "package:example/builder.dart"
-    builder_factories: ["cssBuilder"]
-    build_extensions: {"$package$": ["web/generated.css"]}
-    # The default, but listed explicitly for illustration purposes, see:
-    # https://github.com/dart-lang/build/blob/master/docs/builder_author_faq.md#when-should-a-builder-build-to-cache-vs-source
-    build_to: cache
-    auto_apply: root_package
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-  textBuilder:
-    import: "package:example/builder.dart"
-    builder_factories: ["textBuilder"]
-    build_extensions: {"^assets/{{}}.json": ["lib/generated/{{}}.dart"]}
-    auto_apply: root_package
-    build_to: source
+    - name: Set up Java 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: 17
+
+    - name: Cache Gradle files
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-
+
+    - name: Make Gradle wrapper executable
+      run: chmod +x ./gradlew
+
+    - name: Build mod
+      run: ./gradlew build
+
+    - name: Upload JAR
+      uses: actions/upload-artifact@v4
+      with:
+        name: forge-1.20.1-mod
+        path: build/libs/*.jar
