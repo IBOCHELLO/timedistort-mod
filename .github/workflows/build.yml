@@ -34,4 +34,3 @@ jobs:
         with:
           name: timedistort-mod-jar
           path: build/libs/*.jar
-          if-no-files-found: warning
