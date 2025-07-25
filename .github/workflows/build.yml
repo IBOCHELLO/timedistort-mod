@@ -31,3 +31,5 @@ jobs:
         with:
           name: mod-jar
           path: build/libs/*.jar
+      - name: List build output
+        run: ls -l build/libs/
