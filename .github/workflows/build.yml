@@ -1,4 +1,4 @@
-name: Minecraft Forge Mod Build
+name: Build Minecraft Forge Mod
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Kodu al
+      # Repo klonla
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -26,11 +26,29 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # Derlemeyi çalıştır
-      - name: Build mod with Gradle
-        run: ./gradlew build --no-daemon
-        
-     # Ortaya çıkan jar dosyasını artifact olarak yükle
+      # build/libs klasörünü garanti oluştur
+      - name: Create build/libs directory
+        run: mkdir -p build/libs
+
+      # Temizle + detaylı derleme yap
+      - name: Run Gradle build with debug info
+        run: ./gradlew clean jar --stacktrace --info --debug --no-daemon
+
+      # build/libs klasörünü listele
+      - name: List build/libs directory
+        run: ls -la build/libs
+
+      # Jar dosyasının varlığını doğrula (opsiyonel)
+      - name: Verify jar file exists
+        run: |
+          if ls build/libs/*.jar 1> /dev/null 2>&1; then
+            echo "Jar file found."
+          else
+            echo "ERROR: Jar file NOT found!"
+            exit 1
+          fi
+
+      # Jar dosyasını artifact olarak yükle
       - name: Upload mod jar artifact
         uses: actions/upload-artifact@v4
         with:
