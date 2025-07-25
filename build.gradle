@@ -39,4 +39,6 @@ minecraft {
 jar {
     archiveBaseName.set('timedistort')
     archiveVersion.set('1.0.0')
+    destinationDirectory.set(layout.buildDirectory.dir('libs'))
 }
+
