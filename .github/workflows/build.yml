@@ -30,10 +30,6 @@ jobs:
       - name: Run Gradle build with debug info
         run: ./gradlew clean jar --stacktrace --info --debug --no-daemon
 
-      # build/libs klasörünü listele
-      - name: List build/libs directory
-        run: ls -la build/libs
-
       # Jar dosyasının varlığını doğrula (opsiyonel)
       - name: Verify jar file exists
         run: |
