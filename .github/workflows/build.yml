@@ -1,4 +1,4 @@
-name: Build Mod
+name: Minecraft IBOCHELLO mod
 
 on:
   push:
@@ -11,29 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Kodu al
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Java 17 kur
       - name: Setup Java 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
-      - name: Create build/libs folder if not exists
-        run: mkdir -p build/libs
+      # Gradle Wrapper'a çalıştırma izni ver
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
 
-      - name: Make gradlew executable
-        run: chmod +x gradlew
+      # Derlemeyi çalıştır
+      - name: Build mod with Gradle
+        run: ./gradlew build --no-daemon
 
-      - name: Run Gradle build
-        run: ./gradlew build
-
-      - name: List build/libs contents
+      # Build çıktılarını kontrol et
+      - name: List build/libs directory
         run: ls -la build/libs
 
+      # Ortaya çıkan jar dosyasını artifact olarak yükle
       - name: Upload mod jar artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mod-jar
+          name: forge-mod-jar
           path: build/libs/*.jar
