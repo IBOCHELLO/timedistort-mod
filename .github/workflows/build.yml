@@ -24,3 +24,9 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Upload mod jar artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: timedistort-mod-jar
+          path: build/libs/timedistort-1.0.0.jar
