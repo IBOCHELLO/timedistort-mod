@@ -1,9 +1,10 @@
 modLoader="javafml"
-loaderVersion="[43,)"
+loaderVersion="[47,)"
 license="MIT"
-
 [[mods]]
 modId="timedistort"
 version="1.0.0"
-displayName="Timedistort Mod"
-description='''Basit zaman distorsiyonu modudur.'''
+displayName="Time Distort Mod"
+description='''
+Mod that distorts time for players.
+'''
