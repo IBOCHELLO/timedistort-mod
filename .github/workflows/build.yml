@@ -26,10 +26,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # build/libs klasörünü garanti oluştur
-      - name: Create build/libs directory
-        run: mkdir -p build/libs
-
       # Temizle + detaylı derleme yap
       - name: Run Gradle build with debug info
         run: ./gradlew clean jar --stacktrace --info --debug --no-daemon
