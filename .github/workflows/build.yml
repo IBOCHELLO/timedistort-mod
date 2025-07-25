@@ -3,11 +3,11 @@ name: Build Forge 1.20.1 Mod
 on:
   push:
     branches:
-      - main
+      - main   # veya ana geliştirme yaptığın branch adı
   pull_request:
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch:  # manuel çalıştırma izni
 
 jobs:
   build:
@@ -36,13 +36,13 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x ./gradlew
 
-    - name: Run Gradle build
+    - name: Build mod
       run: ./gradlew build --stacktrace --info
 
-    - name: Show build/libs contents
+    - name: List build/libs contents
       run: ls -l build/libs/
 
-    - name: Upload built jar artifact
+    - name: Upload mod JAR artifact
       uses: actions/upload-artifact@v4
       with:
         name: forge-mod-jar
