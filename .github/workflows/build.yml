@@ -1,4 +1,4 @@
-name: Minecraft Modu Oluştur
+name: Build Mod
 
 on:
   push:
@@ -11,18 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Depoyu klonla
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Java 17'yi kur
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: temurin
+          distribution: 'temurin'
           java-version: 17
 
-      - name: gradlew için çalıştırma izni ver
-        run: chmod +x gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
 
-      - name: Gradle ile derle (logları göster)
-        run: |
-          ./grad
+      - name: Build with Gradle
+        run: ./gradlew build
