@@ -1,0 +1,9 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="MIT"
+
+[[mods]]
+modId="timedistort"
+version="1.0.0"
+displayName="Timedistort Mod"
+description='''Basit zaman distorsiyonu modudur.'''
