@@ -3,8 +3,10 @@ plugins {
     id 'java'
 }
 
-group = 'com.example.timedistort'
+group = 'com.ibochello'
 version = '1.0.0'
+archivesBaseName = 'timedistort'
+
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
@@ -22,11 +24,13 @@ dependencies {
 
 minecraft {
     mappings channel: 'official', version: '1.20.1'
+
     runs {
         client {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
             mods {
                 timedistort {
                     source sourceSets.main
@@ -40,4 +44,11 @@ tasks.jar {
     archiveBaseName.set('timedistort')
     archiveVersion.set('1.0.0')
     from(sourceSets.main.output)
+}
+
+tasks.processResources {
+    inputs.property "version", project.version
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
 }
