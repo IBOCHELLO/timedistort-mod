@@ -11,26 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Repo klonla
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Java 17 kur
       - name: Setup Java 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
-      # Gradle Wrapper'a çalıştırma izni ver
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # Temizle + detaylı derleme yap
-      - name: Run Gradle build with debug info
-        run: ./gradlew clean jar --stacktrace --info --debug --no-daemon
+      - name: Create build/libs directory
+        run: mkdir -p build/libs
 
-      # Jar dosyasının varlığını doğrula (opsiyonel)
+      - name: Run Gradle clean build jar with debug info
+        run: ./gradlew clean build jar --stacktrace --info --debug --no-daemon
+
+      - name: List build/libs directory
+        run: ls -la build/libs
+
       - name: Verify jar file exists
         run: |
           if ls build/libs/*.jar 1> /dev/null 2>&1; then
@@ -40,7 +41,6 @@ jobs:
             exit 1
           fi
 
-      # Jar dosyasını artifact olarak yükle
       - name: Upload mod jar artifact
         uses: actions/upload-artifact@v4
         with:
