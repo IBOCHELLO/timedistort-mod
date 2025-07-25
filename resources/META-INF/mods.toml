@@ -1,10 +1,11 @@
 modLoader="javafml"
-loaderVersion="[47,)"
+loaderVersion="[43,)"
 license="MIT"
+issueTrackerURL="https://github.com/IBOCHELLO/timedistort-mod/issues"
 [[mods]]
 modId="timedistort"
 version="1.0.0"
-displayName="Time Distort Mod"
+displayName="Timedistort Mod"
 description='''
-Mod that distorts time for players.
+Timedistort mod for Minecraft 1.20.1.
 '''
