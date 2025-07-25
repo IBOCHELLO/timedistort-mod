@@ -23,28 +23,15 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Run Gradle clean build with debug info
-        run: ./gradlew clean build --stacktrace --info --debug --no-daemon
+      - name: Build with Gradle
+        run: ./gradlew clean build --stacktrace --info --no-daemon
 
       - name: List build directory recursively
         run: ls -R build
 
-      - name: Find jar file
-        run: |
-          echo "Searching for jar files in build directory:"
-          find build -name "*.jar" -exec ls -l {} \;
-
-      - name: Check for jar file presence (won't fail workflow)
-        run: |
-          if ls build/libs/*.jar 1> /dev/null 2>&1; then
-            echo "✅ Jar file found."
-          else
-            echo "⚠️ WARNING: Jar file NOT found under build/libs!"
-          fi
-
-      - name: Upload mod jar artifact (if exists)
+      - name: Upload mod jar artifact
         uses: actions/upload-artifact@v4
         with:
-          name: forge-mod-jar
+          name: timedistort-mod-jar
           path: build/libs/*.jar
           if-no-files-found: warning
