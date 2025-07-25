@@ -1,4 +1,4 @@
-name: Minecraft Modu Olustur
+name: Minecraft Modu Oluştur
 
 on:
   push:
@@ -31,4 +31,6 @@ jobs:
         with:
           name: mod-jar
           path: build/libs/*.jar
-          
+
+      - name: List build output
+        run: ls -l build/libs/
