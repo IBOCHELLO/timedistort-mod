@@ -1,13 +1,23 @@
 plugins {
-    id 'net.minecraftforge.gradle' version '6.0.11'
+    id 'net.minecraftforge.gradle' version '6.0.16'
+    id 'java'
 }
 
-group = 'com.ibochello'
+group = 'com.example.timedistort'
 version = '1.0.0'
-archivesBaseName = 'timedistort'
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
+repositories {
+    maven {
+        name = 'forge'
+        url = 'https://maven.minecraftforge.net/'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
 }
 
 minecraft {
@@ -15,6 +25,8 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
             mods {
                 timedistort {
                     source sourceSets.main
@@ -24,14 +36,7 @@ minecraft {
     }
 }
 
-repositories {
-    maven {
-        name = 'Forge'
-        url = 'https://maven.minecraftforge.net/'
-    }
-    mavenCentral()
-}
-
-dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'
+jar {
+    archiveBaseName.set('timedistort')
+    archiveVersion.set('1.0.0')
 }
