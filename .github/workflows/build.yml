@@ -29,12 +29,8 @@ jobs:
       # Derlemeyi çalıştır
       - name: Build mod with Gradle
         run: ./gradlew build --no-daemon
-
-      # Build çıktılarını kontrol et
-      - name: List build/libs directory
-        run: ls -la build/libs
-
-      # Ortaya çıkan jar dosyasını artifact olarak yükle
+        
+     # Ortaya çıkan jar dosyasını artifact olarak yükle
       - name: Upload mod jar artifact
         uses: actions/upload-artifact@v4
         with:
